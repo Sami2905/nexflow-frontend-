@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import logo from '../assets/nexflow-logo.svg';
 import { HiEye, HiEyeOff, HiCheckCircle, HiExclamationCircle } from 'react-icons/hi';
 import { useNavigate } from 'react-router-dom';
 import InlineSpinner from '../components/InlineSpinner';
+import { authFetch } from '../utils/authFetch';
 
 export default function Register() {
   const [name, setName] = useState('');
@@ -36,15 +36,20 @@ export default function Register() {
       return;
     }
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/register', { name, email, password });
-      if (res.data && res.data.token) {
-        localStorage.setItem('token', res.data.token);
+      const res = await authFetch('/api/auth/register', {
+        method: 'POST',
+        body: JSON.stringify({ name, email, password }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        localStorage.setItem('token', data.token);
         navigate('/');
       } else {
-        setError('Registration failed: No token received.');
+        const data = await res.json();
+        setError(data.message || 'Registration failed: No token received.');
       }
     } catch (err) {
-      setError(err.response?.data?.message || 'Registration failed');
+      setError('Registration failed');
     } finally {
       setFormLoading(false);
     }
@@ -55,13 +60,13 @@ export default function Register() {
     setTwoFASuccess('');
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch('http://localhost:5000/api/auth/2fa/verify', {
+      const res = await authFetch('/api/auth/2fa/verify', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify({ code: twoFACode }),
       });
       if (!res.ok) throw new Error('Invalid code');
-      await fetch('http://localhost:5000/api/auth/2fa/enable', {
+      await authFetch('/api/auth/2fa/enable', {
         method: 'POST',
         headers: { Authorization: `Bearer ${token}` },
       });

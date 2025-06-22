@@ -43,7 +43,7 @@ export default function Layout() {
       
       console.log('Layout: Token found. Verifying with server...');
       try {
-        const res = await authFetch('http://localhost:5000/api/auth/me');
+        const res = await authFetch('/api/auth/me');
 
         console.log('Layout: Server responded with status:', res.status);
         if (res.ok) {

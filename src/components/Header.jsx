@@ -76,7 +76,7 @@ export default function Header({
     const fetchNotifications = async () => {
       setNotifLoading(true);
       try {
-        const res = await authFetch('http://localhost:5000/api/auth/notifications');
+        const res = await authFetch('/api/auth/notifications');
         if (!res.ok) throw new Error('Failed to fetch notifications');
         const data = await res.json();
         setNotifications(data);
@@ -92,7 +92,7 @@ export default function Header({
   }, []);
 
   useEffect(() => {
-    const socket = io('http://localhost:5000');
+    const socket = io(import.meta.env.VITE_API_URL);
     socket.on('notification', ({ userId, notification }) => {
       if (user && user._id === userId) {
         setNotifications(n => [notification, ...n]);
@@ -105,7 +105,7 @@ export default function Header({
 
   const markAsRead = async id => {
     try {
-      await authFetch(`http://localhost:5000/api/auth/notifications/${id}/read`, {
+      await authFetch(`/api/auth/notifications/${id}/read`, {
         method: 'PATCH',
       });
       setNotifications(n => n.map(notif => notif._id === id ? { ...notif, read: true } : notif));
@@ -114,7 +114,7 @@ export default function Header({
 
   const markAllAsRead = async () => {
     try {
-      await authFetch('http://localhost:5000/api/auth/notifications/read-all', {
+      await authFetch('/api/auth/notifications/read-all', {
         method: 'PATCH',
       });
       setNotifications(n => n.map(notif => ({ ...notif, read: true })));

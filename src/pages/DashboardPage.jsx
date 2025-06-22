@@ -26,7 +26,7 @@ export default function DashboardPage() {
     const fetchStats = async () => {
       setLoading(true);
       try {
-        const res = await authFetch('http://localhost:5000/api/bugs/stats');
+        const res = await authFetch('/api/bugs/stats');
         if (res.ok) {
           const data = await res.json();
           setStats(data);

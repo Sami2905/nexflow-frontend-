@@ -16,7 +16,7 @@ export default function DashboardOverview() {
       setLoading(true);
       setError('');
       try {
-        const res = await authFetch('http://localhost:5000/api/bugs/stats');
+        const res = await authFetch('/api/bugs/stats');
         if (!res.ok) throw new Error('Failed to fetch bug stats');
         const data = await res.json();
         setStats(data);
@@ -34,7 +34,7 @@ export default function DashboardOverview() {
       setActivityLoading(true);
       setActivityError('');
       try {
-        const res = await authFetch('http://localhost:5000/api/activity');
+        const res = await authFetch('/api/activity');
         if (!res.ok) throw new Error('Failed to fetch activity');
         const data = await res.json();
         setActivity(data.slice(0, 10));

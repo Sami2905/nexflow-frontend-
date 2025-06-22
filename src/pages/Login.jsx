@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import logo from '../assets/nexflow-logo.svg';
 import { HiEye, HiEyeOff, HiCheckCircle, HiExclamationCircle } from 'react-icons/hi';
 import { useNavigate } from 'react-router-dom';
+import { authFetch } from '../utils/authFetch';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -33,16 +33,21 @@ export default function Login() {
       return;
     }
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/login', { email, password });
-      if (res.data && res.data.token) {
-        localStorage.setItem('token', res.data.token);
+      const res = await authFetch('/api/auth/login', {
+        method: 'POST',
+        body: JSON.stringify({ email, password }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        localStorage.setItem('token', data.token);
         navigate('/');
         console.log('Redirecting to /');
       } else {
-        setError('Login failed: No token received.');
+        const data = await res.json();
+        setError(data.message || 'Login failed: No token received.');
       }
     } catch (err) {
-      setError(err.response?.data?.message || 'Login failed');
+      setError('Login failed');
     } finally {
       setFormLoading(false);
     }
@@ -56,7 +61,7 @@ export default function Login() {
   const handle2FAVerify = async () => {
     setTwoFAError('');
     try {
-      const res = await fetch('http://localhost:5000/api/auth/2fa/verify', {
+      const res = await authFetch('/api/auth/2fa/verify', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${pendingToken}` },
         body: JSON.stringify({ code: twoFACode }),
