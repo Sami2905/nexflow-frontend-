@@ -1,4 +1,8 @@
 export async function authFetch(url, options = {}) {
+  // Use VITE_API_URL for all API calls
+  const baseUrl = import.meta.env.VITE_API_URL || '';
+  // If url starts with http, use as is; otherwise, prepend baseUrl
+  const fullUrl = url.startsWith('http') ? url : baseUrl.replace(/\/$/, '') + (url.startsWith('/') ? url : '/' + url);
   const token = localStorage.getItem('token');
   if (!token) {
     // No token: redirect to login immediately
@@ -12,7 +16,7 @@ export async function authFetch(url, options = {}) {
     'Content-Type': 'application/json',
   };
   try {
-    const res = await fetch(url, { ...options, headers });
+    const res = await fetch(fullUrl, { ...options, headers });
     if (res.status === 401) {
       let errorMsg = 'Unauthorized';
       try {
