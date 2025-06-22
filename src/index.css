@@ -1,0 +1,74 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Light Theme Tokens */
+  --primary: 221 83% 53%; /* #0052CC */
+  --accent: 158 64% 52%; /* #36B37E */
+  --warning: 39 100% 50%; /* #FFAB00 */
+  --danger: 14 87% 49%; /* #DE350B */
+  --background-light: 220 13% 95%; /* #F4F5F7 */
+  --surface-light: 0 0% 100%; /* #FFFFFF */
+  --text-primary-light: 210 45% 20%; /* #172B4D */
+  --text-secondary-light: 212 15% 48%; /* #6B778C */
+  --border-light: 220 14% 88%; /* #DFE1E6 */
+
+  /* Dark Theme Tokens */
+  --background-dark: 210 2% 10%; /* #1B1C1D */
+  --surface-dark: 240 0% 18%; /* #2E2E2E */
+  --text-primary-dark: 0 0% 100%; /* #FFFFFF */
+  --text-secondary-dark: 218 11% 65%; /* #A5ADBA */
+  --border-dark: 210 2% 23%; /* #3A3B3D */
+}
+
+html[data-theme='dark'] {
+  --primary: 211 100% 58%; /* #2684FF */
+  --accent: 158 68% 60%; /* #57D9A3 */
+  --warning: 45 100% 50%; /* #FFC400 */
+  --danger: 14 100% 60%; /* #FF5630 */
+}
+
+body {
+  @apply font-sans bg-background-light text-text-primary-light dark:bg-background-dark dark:text-text-primary-dark transition-colors duration-300;
+}
+
+/* Glassmorphism utility */
+.glass {
+  background: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  transition: background 0.3s, box-shadow 0.3s;
+}
+
+/* Theme-aware gradient backgrounds */
+body, html, .theme-bg {
+  transition: background 0.5s;
+}
+[data-theme='light'] .theme-bg {
+  background: linear-gradient(135deg, #e0e7ff 0%, #fbc2eb 100%);
+}
+[data-theme='dark'] .theme-bg {
+  background: linear-gradient(135deg, #232526 0%, #414345 100%);
+}
+
+/* Card hover microinteraction */
+.card, .stat {
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.card:hover, .stat:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
+}
+
+/* Notification dropdown animation */
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in {
+  animation: fade-in 0.3s ease;
+}
