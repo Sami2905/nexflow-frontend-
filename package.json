@@ -51,5 +51,18 @@
     "postcss": "^8.5.6",
     "tailwindcss": "^3.4.17",
     "vite": "^6.3.5"
-  }
+  },
+  "description": "This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.",
+  "main": "cypress.config.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sami2905/nexflow-frontend-.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Sami2905/nexflow-frontend-/issues"
+  },
+  "homepage": "https://github.com/Sami2905/nexflow-frontend-#readme"
 }
