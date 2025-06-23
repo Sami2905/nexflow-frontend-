@@ -16,7 +16,7 @@ export default function CreateProject() {
     setError('');
 
     try {
-      const res = await authFetch('/api/projects', {
+      const res = await authFetch('http://localhost:5000/api/projects', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, description }),

@@ -36,8 +36,14 @@ export default function Register() {
       return;
     }
     try {
-      const res = await authFetch('/api/auth/register', {
+      const baseUrl = 'http://localhost:5000';
+      const url = '/api/auth/register';
+      const fullUrl = url.startsWith('http') ? url : baseUrl.replace(/\/$/, '') + (url.startsWith('/') ? url : '/' + url);
+      const res = await fetch(fullUrl, {
         method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify({ name, email, password }),
       });
       if (res.ok) {

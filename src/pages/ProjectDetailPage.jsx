@@ -22,7 +22,7 @@ export default function ProjectDetailPage() {
     const fetchProject = async () => {
       setLoading(true);
       try {
-        const res = await authFetch(`/api/projects/${id}`);
+        const res = await authFetch(`http://localhost:5000/api/projects/${id}`);
         if (res.ok) {
           setProject(await res.json());
         } else {

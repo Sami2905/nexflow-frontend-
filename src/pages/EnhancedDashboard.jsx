@@ -138,7 +138,7 @@ export default function EnhancedDashboard() {
     if (showLoading) setLoadingUser(true);
     setUserError('');
     try {
-      const res = await authFetch('/api/auth/me');
+      const res = await authFetch('http://localhost:5000/api/auth/me');
       if (!res.ok) throw new Error('Failed to fetch user info');
       const data = await res.json();
       setUser(data);
@@ -153,7 +153,7 @@ export default function EnhancedDashboard() {
   const fetchProjects = async (showLoading = true) => {
     if (showLoading) setLoadingProjects(true);
     try {
-      const res = await authFetch('/api/projects');
+      const res = await authFetch('http://localhost:5000/api/projects');
       if (!res.ok) throw new Error('Failed to fetch projects');
       const data = await res.json();
       setProjects(data);
@@ -168,7 +168,7 @@ export default function EnhancedDashboard() {
   const fetchUsers = async (showLoading = true) => {
     if (showLoading) setLoadingUsers(true);
     try {
-      const res = await authFetch('/api/auth/users');
+      const res = await authFetch('http://localhost:5000/api/auth/users');
       if (!res.ok) throw new Error('Failed to fetch users');
       const data = await res.json();
       setUsers(data);
@@ -183,7 +183,7 @@ export default function EnhancedDashboard() {
   const fetchSavedSearches = async (showLoading = true) => {
     if (showLoading) setLoadingSearches(true);
     try {
-      const res = await authFetch('/api/saved-searches');
+      const res = await authFetch('http://localhost:5000/api/saved-searches');
       if (!res.ok) throw new Error('Failed to fetch saved searches');
       const data = await res.json();
       setSavedSearches(data);
@@ -207,7 +207,7 @@ export default function EnhancedDashboard() {
         sortOrder: searchParams.sortOrder || 'desc',
         ...searchParams
       });
-      const res = await authFetch(`/api/bugs?${queryParams}`);
+      const res = await authFetch(`http://localhost:5000/api/bugs?${queryParams}`);
       if (!res.ok) throw new Error('Failed to fetch bugs');
       const data = await res.json();
       setBugs(data.bugs || data);
@@ -272,13 +272,13 @@ export default function EnhancedDashboard() {
   // Save search
   const handleSaveSearch = async (searchConfig) => {
     try {
-      const res = await authFetch('/api/saved-searches', {
+      const res = await authFetch('http://localhost:5000/api/saved-searches', {
         method: 'POST',
         body: JSON.stringify(searchConfig),
       });
       if (!res.ok) throw new Error('Failed to save search');
       // Refresh saved searches
-      const searchesRes = await authFetch('/api/saved-searches');
+      const searchesRes = await authFetch('http://localhost:5000/api/saved-searches');
       if (searchesRes.ok) {
         const data = await searchesRes.json();
         setSavedSearches(data);
@@ -318,7 +318,7 @@ export default function EnhancedDashboard() {
     setFormError('');
     setFormLoading(true);
     try {
-      const res = await authFetch('/api/bugs', {
+      const res = await authFetch('http://localhost:5000/api/bugs', {
         method: 'POST',
         body: JSON.stringify({
           ...form,
@@ -371,7 +371,7 @@ export default function EnhancedDashboard() {
     setEditLoading(true);
     setEditError('');
     try {
-      const res = await authFetch(`/api/bugs/${editId}`, {
+      const res = await authFetch(`http://localhost:5000/api/bugs/${editId}`, {
         method: 'PUT',
         body: JSON.stringify({
           ...editForm,
@@ -403,7 +403,7 @@ export default function EnhancedDashboard() {
     
     setDeleteLoading(id);
     try {
-      const res = await authFetch(`/api/bugs/${id}`, {
+      const res = await authFetch(`http://localhost:5000/api/bugs/${id}`, {
         method: 'DELETE',
       });
       if (!res.ok) throw new Error('Failed to delete bug');

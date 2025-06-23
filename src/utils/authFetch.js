@@ -6,9 +6,8 @@ export async function authFetch(url, options = {}) {
   const token = localStorage.getItem('token');
   if (!token) {
     // No token: redirect to login immediately
-    alert('You must be logged in. Redirecting to login.');
     window.location.href = '/login';
-    throw new Error('No token provided');
+    return new Promise(() => {}); // Prevent further execution
   }
   const headers = {
     ...(options.headers || {}),
@@ -24,9 +23,8 @@ export async function authFetch(url, options = {}) {
         errorMsg = data.message || errorMsg;
       } catch {}
       localStorage.removeItem('token');
-      alert('Logged out: ' + errorMsg);
       window.location.href = '/login';
-      throw new Error(errorMsg);
+      return new Promise(() => {}); // Prevent further execution
     }
     return res;
   } catch (err) {

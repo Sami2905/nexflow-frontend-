@@ -63,7 +63,7 @@ export default function Dashboard() {
       setLoadingUser(true);
       setUserError('');
       try {
-        const res = await authFetch('/api/auth/me');
+        const res = await authFetch('http://localhost:5000/api/auth/me');
         if (!res.ok) throw new Error('Failed to fetch user info');
         const data = await res.json();
         setUser(data);
@@ -80,7 +80,7 @@ export default function Dashboard() {
     setLoadingBugs(true);
     setBugsError('');
     try {
-      const res = await authFetch('/api/bugs');
+      const res = await authFetch('http://localhost:5000/api/bugs');
       if (!res.ok) throw new Error('Failed to fetch bugs');
       const data = await res.json();
       setBugs(data.bugs || []);
@@ -101,7 +101,7 @@ export default function Dashboard() {
     setFormError('');
     setFormLoading(true);
     try {
-      const res = await authFetch('/api/bugs', {
+      const res = await authFetch('http://localhost:5000/api/bugs', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -126,7 +126,7 @@ export default function Dashboard() {
     setDeleteLoading(id);
     setDeleteError('');
     try {
-      const res = await authFetch(`/api/bugs/${id}`, {
+      const res = await authFetch(`http://localhost:5000/api/bugs/${id}`, {
         method: 'DELETE',
       });
       if (!res.ok) {
@@ -162,7 +162,7 @@ export default function Dashboard() {
     setEditLoading(true);
     setEditError('');
     try {
-      const res = await authFetch(`/api/bugs/${id}`, {
+      const res = await authFetch(`http://localhost:5000/api/bugs/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -198,7 +198,7 @@ export default function Dashboard() {
   const fetchProjects = async () => {
     setLoadingProjects(true);
     try {
-      const res = await authFetch('/api/projects');
+      const res = await authFetch('http://localhost:5000/api/projects');
       if (!res.ok) throw new Error('Failed to fetch projects');
       const data = await res.json();
       setProjects(data);
@@ -232,7 +232,7 @@ export default function Dashboard() {
   const highPriorityBugs = sortedBugs.filter(b => b.priority === 'High').length;
 
   useEffect(() => {
-    const socket = io(import.meta.env.VITE_API_URL);
+    const socket = io('http://localhost:5000');
     socket.on('connect', () => {
       console.log('Connected to Socket.io server');
     });

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import logo from '../assets/nexflow-logo.svg';
 import { HiEye, HiEyeOff, HiCheckCircle, HiExclamationCircle } from 'react-icons/hi';
 import { useNavigate } from 'react-router-dom';
-import { authFetch } from '../utils/authFetch';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -33,8 +32,14 @@ export default function Login() {
       return;
     }
     try {
-      const res = await authFetch('/api/auth/login', {
+      const baseUrl = 'http://localhost:5000';
+      const url = '/api/auth/login';
+      const fullUrl = url.startsWith('http') ? url : baseUrl.replace(/\/$/, '') + (url.startsWith('/') ? url : '/' + url);
+      const res = await fetch(fullUrl, {
         method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify({ email, password }),
       });
       if (res.ok) {
@@ -61,7 +66,10 @@ export default function Login() {
   const handle2FAVerify = async () => {
     setTwoFAError('');
     try {
-      const res = await authFetch('/api/auth/2fa/verify', {
+      const baseUrl = 'http://localhost:5000';
+      const url = '/api/auth/2fa/verify';
+      const fullUrl = url.startsWith('http') ? url : baseUrl.replace(/\/$/, '') + (url.startsWith('/') ? url : '/' + url);
+      const res = await fetch(fullUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${pendingToken}` },
         body: JSON.stringify({ code: twoFACode }),
