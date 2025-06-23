@@ -97,7 +97,7 @@ export default function BoardView() {
       setLoading(true);
       try {
         const token = localStorage.getItem('token');
-        const res = await fetch(`http://localhost:5000/api/bugs?project=${project._id}&limit=200`, { // Fetch more for a board
+        const res = await fetch(`/api/bugs?project=${project._id}&limit=200`, { // Fetch more for a board
           headers: { Authorization: `Bearer ${token}` }
         });
         if (res.ok) {
@@ -173,7 +173,7 @@ export default function BoardView() {
   const updateBugStatus = async (bugId, newStatus) => {
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch(`http://localhost:5000/api/bugs/${bugId}`, {
+      const res = await fetch(`/api/bugs/${bugId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

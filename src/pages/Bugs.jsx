@@ -28,7 +28,7 @@ export default function Bugs() {
       setLoading(true);
       setError('');
       try {
-        const res = await authFetch('http://localhost:5000/api/bugs');
+        const res = await authFetch('/api/bugs');
         if (!res.ok) throw new Error('Failed to fetch bugs');
         const data = await res.json();
         setBugs(data.bugs || data);

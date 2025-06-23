@@ -36,7 +36,7 @@ export default function CreateBugPanel({ open, onClose, onSuccess, projects = []
     setFormError('');
     setFormLoading(true);
     try {
-      const res = await authFetch('http://localhost:5000/api/bugs', {
+      const res = await authFetch('/api/bugs', {
         method: 'POST',
         body: JSON.stringify({
           ...form,

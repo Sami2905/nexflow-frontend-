@@ -17,7 +17,7 @@ export default function ActivityView() {
     setLoading(true);
     setError('');
     try {
-      const res = await authFetch(`http://localhost:5000/api/projects/${projectId}/activity`);
+      const res = await authFetch(`/api/projects/${projectId}/activity`);
       if (!res.ok) throw new Error('Failed to fetch activity logs');
       const data = await res.json();
       setLogs(data);

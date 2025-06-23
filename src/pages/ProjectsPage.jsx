@@ -59,7 +59,7 @@ export default function ProjectsPage() {
     const fetchProjects = async () => {
       setLoading(true);
       try {
-        const res = await authFetch(`http://localhost:5000/api/projects`);
+        const res = await authFetch('/api/projects');
         
         if (res.ok) {
           const data = await res.json();
@@ -83,7 +83,7 @@ export default function ProjectsPage() {
     setDeleteLoading(true);
     setDeleteError('');
     try {
-      const res = await authFetch(`http://localhost:5000/api/projects/${deleteId}`, {
+      const res = await authFetch(`/api/projects/${deleteId}`, {
         method: 'DELETE',
       });
       if (res.ok) {

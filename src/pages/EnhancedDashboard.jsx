@@ -272,13 +272,13 @@ export default function EnhancedDashboard() {
   // Save search
   const handleSaveSearch = async (searchConfig) => {
     try {
-      const res = await authFetch('http://localhost:5000/api/saved-searches', {
+      const res = await authFetch('/api/saved-searches', {
         method: 'POST',
         body: JSON.stringify(searchConfig),
       });
       if (!res.ok) throw new Error('Failed to save search');
       // Refresh saved searches
-      const searchesRes = await authFetch('http://localhost:5000/api/saved-searches');
+      const searchesRes = await authFetch('/api/saved-searches');
       if (searchesRes.ok) {
         const data = await searchesRes.json();
         setSavedSearches(data);
@@ -318,7 +318,7 @@ export default function EnhancedDashboard() {
     setFormError('');
     setFormLoading(true);
     try {
-      const res = await authFetch('http://localhost:5000/api/bugs', {
+      const res = await authFetch('/api/bugs', {
         method: 'POST',
         body: JSON.stringify({
           ...form,
@@ -371,7 +371,7 @@ export default function EnhancedDashboard() {
     setEditLoading(true);
     setEditError('');
     try {
-      const res = await authFetch(`http://localhost:5000/api/bugs/${editId}`, {
+      const res = await authFetch(`/api/bugs/${editId}`, {
         method: 'PUT',
         body: JSON.stringify({
           ...editForm,
@@ -403,7 +403,7 @@ export default function EnhancedDashboard() {
     
     setDeleteLoading(id);
     try {
-      const res = await authFetch(`http://localhost:5000/api/bugs/${id}`, {
+      const res = await authFetch(`/api/bugs/${id}`, {
         method: 'DELETE',
       });
       if (!res.ok) throw new Error('Failed to delete bug');

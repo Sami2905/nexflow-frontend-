@@ -96,7 +96,7 @@ export default function ProjectTable({ projects, onDelete }) {
     setArchiveLoadingIds(ids => [...ids, projectId]);
     setArchiveError('');
     try {
-      const res = await authFetch(`http://localhost:5000/api/projects/${projectId}/archive`, {
+      const res = await authFetch(`/api/projects/${projectId}/archive`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ archived: !archived })
@@ -132,7 +132,7 @@ export default function ProjectTable({ projects, onDelete }) {
     setBulkDeleteError('');
     try {
       for (const projectId of selectedIds) {
-        await authFetch(`http://localhost:5000/api/projects/${projectId}`, {
+        await authFetch(`/api/projects/${projectId}`, {
           method: 'DELETE'
         });
       }
@@ -148,7 +148,7 @@ export default function ProjectTable({ projects, onDelete }) {
     setBulkArchiveError('');
     try {
       for (const projectId of selectedIds) {
-        await authFetch(`http://localhost:5000/api/projects/${projectId}/archive`, {
+        await authFetch(`/api/projects/${projectId}/archive`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ archived: true })
@@ -173,7 +173,7 @@ export default function ProjectTable({ projects, onDelete }) {
     setAddMemberError('');
     setAddMemberSuccess('');
     try {
-      const res = await authFetch(`http://localhost:5000/api/projects/${addMemberProjectId}/invite`, {
+      const res = await authFetch(`/api/projects/${addMemberProjectId}/invite`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: addMemberEmail })

@@ -13,7 +13,7 @@ export default function TopContributorsChart() {
       setLoading(true);
       setError('');
       try {
-        const res = await authFetch('http://localhost:5000/api/activity/top-contributors');
+        const res = await authFetch('/api/activity/top-contributors');
         if (!res.ok) throw new Error('Failed to fetch top contributors');
         const contributors = await res.json();
         setData(contributors);

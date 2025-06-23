@@ -13,7 +13,7 @@ export default function ReportBug() {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const res = await authFetch('http://localhost:5000/api/projects');
+        const res = await authFetch('/api/projects');
         if (!res.ok) throw new Error('Failed to fetch projects');
         const data = await res.json();
         setProjects(data);
@@ -31,7 +31,7 @@ export default function ReportBug() {
     setFormError('');
     setFormLoading(true);
     try {
-      const res = await authFetch('http://localhost:5000/api/bugs', {
+      const res = await authFetch('/api/bugs', {
         method: 'POST',
         body: JSON.stringify(form),
       });

@@ -105,7 +105,7 @@ export default function Settings() {
       return;
     }
     try {
-      const res = await authFetch('http://localhost:5000/api/auth/change-password', {
+      const res = await authFetch('/api/auth/change-password', {
         method: 'PUT',
         body: JSON.stringify({ current: passwordForm.current, newPassword: passwordForm.new }),
       });
@@ -174,7 +174,7 @@ export default function Settings() {
   const handle2FADisable = async () => {
     if (!window.confirm('Disable 2FA?')) return;
     try {
-      await authFetch('http://localhost:5000/api/auth/2fa/disable', {
+      await authFetch('/api/auth/2fa/disable', {
         method: 'POST',
       });
       setTwoFAEnabled(false);

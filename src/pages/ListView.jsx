@@ -120,7 +120,7 @@ export default function ListView() {
     setEditLoading(true);
     setEditError('');
     try {
-      const res = await authFetch(`http://localhost:5000/api/bugs/${id}`, {
+      const res = await authFetch(`/api/bugs/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(editForm),
@@ -138,7 +138,7 @@ export default function ListView() {
   const handleDelete = async id => {
     setDeleteLoading(id);
     try {
-      const res = await authFetch(`http://localhost:5000/api/bugs/${id}`, { method: 'DELETE' });
+      const res = await authFetch(`/api/bugs/${id}`, { method: 'DELETE' });
       if (!res.ok) throw new Error('Failed to delete ticket');
       fetchTickets();
     } catch {}
@@ -149,7 +149,7 @@ export default function ListView() {
   const fetchComments = async bugId => {
     setCommentsLoading(true);
     try {
-      const res = await authFetch(`http://localhost:5000/api/bugs/${bugId}/comments`);
+      const res = await authFetch(`/api/bugs/${bugId}/comments`);
       if (!res.ok) throw new Error('Failed to fetch comments');
       const data = await res.json();
       setComments(data);
@@ -172,7 +172,7 @@ export default function ListView() {
     setCommentError('');
     if (!commentText.trim()) return;
     try {
-      const res = await authFetch(`http://localhost:5000/api/bugs/${commentTicket._id}/comments`, {
+      const res = await authFetch(`/api/bugs/${commentTicket._id}/comments`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ text: commentText }),
@@ -194,7 +194,7 @@ export default function ListView() {
   };
   const handleEditCommentSave = async (comment) => {
     try {
-      const res = await authFetch(`http://localhost:5000/api/bugs/${commentTicket._id}/comments/${comment._id}`, {
+      const res = await authFetch(`/api/bugs/${commentTicket._id}/comments/${comment._id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ text: editingCommentText }),
@@ -295,7 +295,7 @@ export default function ListView() {
         for (const row of results.data) {
           if (!row.Title) continue;
           try {
-            await authFetch('http://localhost:5000/api/bugs', {
+            await authFetch('/api/bugs', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
@@ -378,7 +378,7 @@ export default function ListView() {
   const handleAssigneeChange = async (ticketId, userId) => {
     setAssigneeLoadingId(ticketId);
     try {
-      const res = await authFetch(`http://localhost:5000/api/bugs/${ticketId}`, {
+      const res = await authFetch(`/api/bugs/${ticketId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ assignedTo: userId }),

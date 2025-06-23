@@ -13,7 +13,7 @@ export default function ActivityTrendChart() {
       setLoading(true);
       setError('');
       try {
-        const res = await authFetch('http://localhost:5000/api/activity/trends');
+        const res = await authFetch('/api/activity/trends');
         if (!res.ok) throw new Error('Failed to fetch activity trends');
         const trends = await res.json();
         setData(trends);

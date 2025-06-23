@@ -20,7 +20,7 @@ export default function RegisterPage() {
     try {
       const baseUrl = import.meta.env.VITE_API_URL || '';
       const url = '/api/auth/register';
-      const fullUrl = url.startsWith('http') ? url : baseUrl.replace(/\/$/, '') + (url.startsWith('/') ? url : '/' + url);
+      const fullUrl = url;
       await axios.post(fullUrl, { name, email, password });
       setSuccess('Registration successful! You can now log in.');
     } catch (err) {

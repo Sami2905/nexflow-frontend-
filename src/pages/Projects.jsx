@@ -29,7 +29,7 @@ export default function Projects() {
       setLoading(true);
       setError('');
       try {
-        const res = await fetch('http://localhost:5000/api/projects');
+        const res = await fetch('/api/projects');
         if (!res.ok) throw new Error('Failed to fetch projects');
         const data = await res.json();
         setProjects(data.projects || data);

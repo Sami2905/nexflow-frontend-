@@ -16,7 +16,7 @@ export default function InviteMember() {
     setError('');
     setSuccess('');
     try {
-      const res = await authFetch('http://localhost:5000/api/projects/invite', {
+      const res = await authFetch('/api/projects/invite', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email }),

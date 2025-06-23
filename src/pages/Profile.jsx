@@ -43,7 +43,7 @@ export default function Profile() {
     setProfileError('');
     setProfileSuccess('');
     try {
-      const res = await authFetch('http://localhost:5000/api/auth/me', {
+      const res = await authFetch('/api/auth/me', {
         method: 'PUT',
         body: JSON.stringify({ name: profile.name, email: profile.email }),
       });
@@ -68,7 +68,7 @@ export default function Profile() {
     try {
       const formData = new FormData();
       formData.append('avatar', avatarFile);
-      const res = await authFetch('http://localhost:5000/api/auth/me/avatar', {
+      const res = await authFetch('/api/auth/me/avatar', {
         method: 'POST',
         body: formData,
       });

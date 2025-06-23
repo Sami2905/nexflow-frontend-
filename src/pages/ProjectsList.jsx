@@ -27,7 +27,7 @@ export default function ProjectsList() {
     setLoading(true);
     setError('');
     try {
-      const res = await authFetch('http://localhost:5000/api/projects');
+      const res = await authFetch('/api/projects');
       if (!res.ok) throw new Error('Failed to fetch projects');
       const data = await res.json();
       setProjects(data);
@@ -35,7 +35,7 @@ export default function ProjectsList() {
       const bugCountsObj = {};
       await Promise.all(data.map(async (project) => {
         try {
-          const statsRes = await authFetch(`http://localhost:5000/api/bugs/stats?project=${project._id}`);
+          const statsRes = await authFetch(`/api/bugs/stats?project=${project._id}`);
           if (statsRes.ok) {
             const stats = await statsRes.json();
             bugCountsObj[project._id] = stats.total;
@@ -63,7 +63,7 @@ export default function ProjectsList() {
     setFormError('');
     setFormLoading(true);
     try {
-      const res = await authFetch('http://localhost:5000/api/projects', {
+      const res = await authFetch('/api/projects', {
         method: 'POST',
         body: JSON.stringify(form),
       });

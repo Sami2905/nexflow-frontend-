@@ -145,7 +145,7 @@ export default function ProjectDetail() {
       setError('');
       try {
         const token = localStorage.getItem('token');
-        const res = await authFetch(`http://localhost:5000/api/projects/${projectId}`, {
+        const res = await authFetch(`/api/projects/${projectId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (!res.ok) throw new Error('Failed to fetch project');
@@ -165,7 +165,7 @@ export default function ProjectDetail() {
       setLoading(true);
       setError('');
       try {
-        const res = await authFetch(`http://localhost:5000/api/bugs?project=${projectId}`);
+        const res = await authFetch(`/api/bugs?project=${projectId}`);
         if (!res.ok) throw new Error('Failed to fetch tickets');
         const data = await res.json();
         setTickets(Array.isArray(data) ? data : data.bugs || []);
@@ -186,7 +186,7 @@ export default function ProjectDetail() {
     setCreateError('');
     setCreateLoading(true);
     try {
-      const res = await authFetch('http://localhost:5000/api/bugs', {
+      const res = await authFetch('/api/bugs', {
         method: 'POST',
         body: JSON.stringify({ ...createForm, project: projectId }),
       });
@@ -222,7 +222,7 @@ export default function ProjectDetail() {
     setEditLoading(true);
     try {
       const token = localStorage.getItem('token');
-      const res = await authFetch(`http://localhost:5000/api/bugs/${editId}`, {
+      const res = await authFetch(`/api/bugs/${editId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -248,7 +248,7 @@ export default function ProjectDetail() {
     setDeleteLoading(id);
     try {
       const token = localStorage.getItem('token');
-      const res = await authFetch(`http://localhost:5000/api/bugs/${id}`, {
+      const res = await authFetch(`/api/bugs/${id}`, {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -276,7 +276,7 @@ export default function ProjectDetail() {
     setKanbanLoading(true);
     try {
       const token = localStorage.getItem('token');
-      await authFetch(`http://localhost:5000/api/bugs/${ticket._id}`, {
+      await authFetch(`/api/bugs/${ticket._id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -300,7 +300,7 @@ export default function ProjectDetail() {
     setInviteError('');
     try {
       const token = localStorage.getItem('token');
-      const res = await authFetch(`http://localhost:5000/api/projects/${projectId}/invite`, {
+      const res = await authFetch(`/api/projects/${projectId}/invite`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify({ email: inviteEmail }),
@@ -322,7 +322,7 @@ export default function ProjectDetail() {
     setCancelInviteLoading(email);
     try {
       const token = localStorage.getItem('token');
-      const res = await authFetch(`http://localhost:5000/api/projects/${projectId}/cancel-invite`, {
+      const res = await authFetch(`/api/projects/${projectId}/cancel-invite`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify({ email }),
@@ -341,7 +341,7 @@ export default function ProjectDetail() {
   const handleAcceptInvite = async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await authFetch(`http://localhost:5000/api/projects/${projectId}/accept-invite`, {
+      const res = await authFetch(`/api/projects/${projectId}/accept-invite`, {
         method: 'POST',
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -357,7 +357,7 @@ export default function ProjectDetail() {
   const handleDeclineInvite = async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await authFetch(`http://localhost:5000/api/projects/${projectId}/decline-invite`, {
+      const res = await authFetch(`/api/projects/${projectId}/decline-invite`, {
         method: 'POST',
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -379,7 +379,7 @@ export default function ProjectDetail() {
     setRemoveLoading(userId);
     try {
       const token = localStorage.getItem('token');
-      const res = await authFetch(`http://localhost:5000/api/projects/${projectId}/remove-member`, {
+      const res = await authFetch(`/api/projects/${projectId}/remove-member`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -405,7 +405,7 @@ export default function ProjectDetail() {
         setActivityError('');
         try {
           const token = localStorage.getItem('token');
-          const res = await authFetch(`http://localhost:5000/api/projects/${projectId}/activity`, {
+          const res = await authFetch(`/api/projects/${projectId}/activity`, {
             headers: { Authorization: `Bearer ${token}` },
           });
           if (!res.ok) throw new Error('Failed to fetch activity logs');
@@ -435,7 +435,7 @@ export default function ProjectDetail() {
     setSettingsError('');
     try {
       const token = localStorage.getItem('token');
-      const res = await authFetch(`http://localhost:5000/api/projects/${projectId}`, {
+      const res = await authFetch(`/api/projects/${projectId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify(settingsForm),
@@ -455,7 +455,7 @@ export default function ProjectDetail() {
     setArchiveLoading(true);
     try {
       const token = localStorage.getItem('token');
-      const res = await authFetch(`http://localhost:5000/api/projects/${projectId}/archive`, {
+      const res = await authFetch(`/api/projects/${projectId}/archive`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify({ archived: !project.archived }),
@@ -513,7 +513,7 @@ export default function ProjectDetail() {
     setCommentsLoading(true);
     try {
       const token = localStorage.getItem('token');
-      const res = await authFetch(`http://localhost:5000/api/bugs/${bugId}/comments`, {
+      const res = await authFetch(`/api/bugs/${bugId}/comments`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (!res.ok) throw new Error('Failed to fetch comments');
@@ -537,7 +537,7 @@ export default function ProjectDetail() {
     if (!commentText.trim()) return;
     try {
       const token = localStorage.getItem('token');
-      const res = await authFetch(`http://localhost:5000/api/bugs/${ticketDetail._id}/comments`, {
+      const res = await authFetch(`/api/bugs/${ticketDetail._id}/comments`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify({ text: commentText }),
@@ -560,7 +560,7 @@ export default function ProjectDetail() {
     formData.append('file', attachmentFile);
     try {
       const token = localStorage.getItem('token');
-      const res = await authFetch(`http://localhost:5000/api/bugs/${ticketDetail._id}/attachments`, {
+      const res = await authFetch(`/api/bugs/${ticketDetail._id}/attachments`, {
         method: 'POST',
         headers: { Authorization: `Bearer ${token}` },
         body: formData,
@@ -584,7 +584,7 @@ export default function ProjectDetail() {
   };
   const handleEditCommentSave = async (comment) => {
     try {
-      const res = await authFetch(`http://localhost:5000/api/bugs/${ticketDetail._id}/comments/${comment._id}`, {
+      const res = await authFetch(`/api/bugs/${ticketDetail._id}/comments/${comment._id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${localStorage.getItem('token')}` },
         body: JSON.stringify({ text: editingCommentText }),
@@ -606,7 +606,7 @@ export default function ProjectDetail() {
   const handleDeleteComment = async (comment) => {
     setDeletingCommentId(comment._id);
     try {
-      const res = await authFetch(`http://localhost:5000/api/bugs/${ticketDetail._id}/comments/${comment._id}`, {
+      const res = await authFetch(`/api/bugs/${ticketDetail._id}/comments/${comment._id}`, {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       });

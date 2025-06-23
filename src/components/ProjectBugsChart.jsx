@@ -13,7 +13,7 @@ export default function ProjectBugsChart() {
       setLoading(true);
       setError('');
       try {
-        const res = await authFetch('http://localhost:5000/api/bugs/project-stats');
+        const res = await authFetch('/api/bugs/project-stats');
         if (!res.ok) throw new Error('Failed to fetch bug stats');
         const stats = await res.json();
         setData(stats);
