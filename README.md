@@ -1,24 +1,67 @@
-# React + Vite
+# NexFlow
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+NexFlow is a modern, full-stack bug and project management platform designed for teams to track issues, manage projects, and collaborate efficiently.
 
-Currently, two official plugins are available:
+## Features
+- User authentication (register, login, password reset)
+- Project and bug tracking
+- Dashboard with activity and statistics
+- Real-time notifications
+- Role-based access control
+- Responsive design for desktop and mobile
+- Dark mode and accessibility options
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Tech Stack
+- **Frontend:** React, Tailwind CSS, Vite
+- **Backend:** Node.js, Express, MongoDB
+- **Authentication:** JWT-based
+- **Other:** Cypress (testing), Netlify (deployment)
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Prerequisites
+- Node.js (v16+ recommended)
+- npm or yarn
+- MongoDB instance (local or cloud)
 
-## Deployment Notes
+### Setup
+1. **Clone the repository:**
+   ```bash
+   git clone <your-repo-url>
+   cd NexFlow
+   ```
+2. **Install dependencies:**
+   - For frontend:
+     ```bash
+     cd client
+     npm install
+     ```
+   - For backend:
+     ```bash
+     cd ../server
+     npm install
+     ```
+3. **Configure environment variables:**
+   - Frontend: Create a `.env` file in `client/` and set `VITE_API_URL` to your backend URL.
+   - Backend: Create a `.env` file in `server/` and set `MONGO_URI`, `JWT_SECRET`, etc.
+4. **Run the app:**
+   - Start backend:
+     ```bash
+     cd server
+     npm start
+     ```
+   - Start frontend:
+     ```bash
+     cd ../client
+     npm run dev
+     ```
 
-After deploying to Vercel or Netlify:
+## Running Tests
+- Frontend: `cd client && npm run test`
+- Backend: `cd server && npm test`
 
-1. Go to your project dashboard on Vercel/Netlify.
-2. Add the following environment variable:
-   - **Key:** VITE_API_URL
-   - **Value:** https://nexflow-backend.onrender.com
-3. Redeploy your frontend if needed.
+## Contributing
+Pull requests are welcome! For major changes, please open an issue first to discuss what you would like to change.
 
-This ensures your frontend connects to your deployed backend API.
+## License
+[MIT](LICENSE)
