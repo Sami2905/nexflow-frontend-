@@ -15,7 +15,10 @@ export default function ForgotPassword() {
     setError('');
     setMessage('');
     try {
-      const res = await fetch('http://localhost:5000/api/auth/forgot-password', {
+      const baseUrl = import.meta.env.VITE_API_URL || '';
+      const url = '/api/auth/forgot-password';
+      const fullUrl = url.startsWith('http') ? url : baseUrl.replace(/\/$/, '') + (url.startsWith('/') ? url : '/' + url);
+      const res = await fetch(fullUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email }),

@@ -35,7 +35,7 @@ export default function Settings() {
     const fetchSettings = async () => {
       setLoading(true);
       try {
-        const res = await authFetch('http://localhost:5000/api/auth/me');
+        const res = await authFetch('/api/auth/me');
         if (!res.ok) throw new Error('Failed to fetch profile');
         const data = await res.json();
         setDarkMode(data.theme === 'dark');
@@ -57,7 +57,7 @@ export default function Settings() {
 
   const updateSettings = async (updates) => {
     try {
-      const res = await authFetch('http://localhost:5000/api/auth/me/settings', {
+      const res = await authFetch('/api/auth/me/settings', {
         method: 'PUT',
         body: JSON.stringify(updates),
       });
@@ -118,7 +118,7 @@ export default function Settings() {
   };
   const handleDeleteAccount = async () => {
     try {
-      const res = await authFetch('http://localhost:5000/api/auth/me', {
+      const res = await authFetch('/api/auth/me', {
         method: 'DELETE',
       });
       if (!res.ok) throw new Error('Failed to delete account');
@@ -135,7 +135,7 @@ export default function Settings() {
     setShow2FASetup(true);
     try {
       if (twoFAMethod === 'app') {
-        const res = await authFetch('http://localhost:5000/api/auth/2fa/setup', {
+        const res = await authFetch('/api/auth/2fa/setup', {
           method: 'POST',
         });
         const data = await res.json();
@@ -143,7 +143,7 @@ export default function Settings() {
         setTwoFAQr(data.qr);
         setTwoFAOtpauth(data.otpauthUrl);
       } else {
-        await authFetch('http://localhost:5000/api/auth/2fa/email/send', {
+        await authFetch('/api/auth/2fa/email/send', {
           method: 'POST',
         });
       }
@@ -155,12 +155,12 @@ export default function Settings() {
     setTwoFAError('');
     setTwoFASuccess('');
     try {
-      const res = await authFetch('http://localhost:5000/api/auth/2fa/verify', {
+      const res = await authFetch('/api/auth/2fa/verify', {
         method: 'POST',
         body: JSON.stringify({ code: twoFACode }),
       });
       if (!res.ok) throw new Error('Invalid code');
-      await authFetch('http://localhost:5000/api/auth/2fa/enable', {
+      await authFetch('/api/auth/2fa/enable', {
         method: 'POST',
       });
       setTwoFAEnabled(true);

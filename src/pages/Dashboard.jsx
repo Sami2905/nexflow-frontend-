@@ -232,7 +232,7 @@ export default function Dashboard() {
   const highPriorityBugs = sortedBugs.filter(b => b.priority === 'High').length;
 
   useEffect(() => {
-    const socket = io('http://localhost:5000');
+    const socket = io(import.meta.env.VITE_API_URL, { transports: ['websocket'] });
     socket.on('connect', () => {
       console.log('Connected to Socket.io server');
     });

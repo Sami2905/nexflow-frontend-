@@ -54,7 +54,7 @@ export default function ListView() {
     setLoading(true);
     setError('');
     try {
-      const res = await authFetch(`http://localhost:5000/api/bugs?project=${projectId}`);
+      const res = await authFetch(`/api/bugs?project=${projectId}`);
       if (!res.ok) throw new Error('Failed to fetch tickets');
       const data = await res.json();
       setTickets(Array.isArray(data) ? data : data.bugs || []);
@@ -68,7 +68,7 @@ export default function ListView() {
 
   const fetchUsers = async () => {
     try {
-      const res = await authFetch('http://localhost:5000/api/auth/users');
+      const res = await authFetch('/api/auth/users');
       if (!res.ok) throw new Error('Failed to fetch users');
       const data = await res.json();
       setUsers(data);
@@ -80,7 +80,7 @@ export default function ListView() {
   useEffect(() => { if (projectId) fetchTickets(); fetchUsers(); }, [projectId]);
 
   useEffect(() => {
-    const socket = io('http://localhost:5000');
+    const socket = io(import.meta.env.VITE_API_URL, { transports: ['websocket'] });
     socket.on('bugCreated', fetchTickets);
     socket.on('bugUpdated', fetchTickets);
     socket.on('bugDeleted', fetchTickets);
@@ -216,7 +216,7 @@ export default function ListView() {
   const handleDeleteComment = async (comment) => {
     setDeletingCommentId(comment._id);
     try {
-      const res = await authFetch(`http://localhost:5000/api/bugs/${commentTicket._id}/comments/${comment._id}`, { method: 'DELETE' });
+      const res = await authFetch(`/api/bugs/${commentTicket._id}/comments/${comment._id}`, { method: 'DELETE' });
       if (!res.ok) throw new Error('Failed to delete comment');
       setComments(cs => cs.filter(c => c._id !== comment._id));
       setDeletingCommentId('');
@@ -229,7 +229,7 @@ export default function ListView() {
   // Real-time updates for comments
   useEffect(() => {
     if (!commentTicket) return;
-    const socket = io('http://localhost:5000');
+    const socket = io(import.meta.env.VITE_API_URL, { transports: ['websocket'] });
     socket.on('commentAdded', ({ bugId, comment }) => {
       if (commentTicket && bugId === commentTicket._id) {
         setComments(cs => [...cs, comment]);

@@ -24,7 +24,7 @@ export default function Profile() {
     const fetchProfile = async () => {
       setProfileLoading(true);
       try {
-        const res = await authFetch('http://localhost:5000/api/auth/me');
+        const res = await authFetch('/api/auth/me');
         if (!res.ok) throw new Error('Failed to fetch profile');
         const data = await res.json();
         setProfile(data);

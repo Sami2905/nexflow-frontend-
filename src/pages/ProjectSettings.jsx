@@ -27,7 +27,7 @@ export default function ProjectSettings() {
     setLoading(true);
     setError('');
     try {
-      const res = await authFetch(`http://localhost:5000/api/projects/${projectId}`);
+      const res = await authFetch(`/api/projects/${projectId}`);
       if (!res.ok) throw new Error('Failed to fetch project');
       const data = await res.json();
       setProject(data);
@@ -43,7 +43,7 @@ export default function ProjectSettings() {
   useEffect(() => { if (projectId) fetchProject(); }, [projectId]);
 
   useEffect(() => {
-    const socket = io('http://localhost:5000');
+    const socket = io(import.meta.env.VITE_API_URL, { transports: ['websocket'] });
     socket.on('projectUpdated', updated => {
       if (updated._id === projectId) {
         setProject(updated);
@@ -60,7 +60,7 @@ export default function ProjectSettings() {
     setError('');
     setSuccess('');
     try {
-      const res = await authFetch(`http://localhost:5000/api/projects/${projectId}`, {
+      const res = await authFetch(`/api/projects/${projectId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
@@ -79,7 +79,7 @@ export default function ProjectSettings() {
   // Change member role
   const handleRoleChange = async (memberId, newRole) => {
     try {
-      const res = await authFetch(`http://localhost:5000/api/projects/${projectId}/members/${memberId}/role`, {
+      const res = await authFetch(`/api/projects/${projectId}/members/${memberId}/role`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ role: newRole }),
@@ -98,7 +98,7 @@ export default function ProjectSettings() {
     setInviteLoading(true);
     setInviteError('');
     try {
-      const res = await authFetch(`http://localhost:5000/api/projects/${projectId}/invite`, {
+      const res = await authFetch(`/api/projects/${projectId}/invite`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: inviteEmail }),
@@ -118,7 +118,7 @@ export default function ProjectSettings() {
   const handleCancelInvite = async email => {
     // (Assume backend route exists: DELETE /api/projects/:id/invite/:email)
     try {
-      const res = await authFetch(`http://localhost:5000/api/projects/${projectId}/invite/${encodeURIComponent(email)}`, { method: 'DELETE' });
+      const res = await authFetch(`/api/projects/${projectId}/invite/${encodeURIComponent(email)}`, { method: 'DELETE' });
       if (!res.ok) throw new Error('Failed to cancel invite');
       const data = await res.json();
       setProject(data);
@@ -131,7 +131,7 @@ export default function ProjectSettings() {
   const handleRemoveMember = async userId => {
     // (Assume backend route exists: DELETE /api/projects/:id/members/:userId)
     try {
-      const res = await authFetch(`http://localhost:5000/api/projects/${projectId}/members/${userId}`, { method: 'DELETE' });
+      const res = await authFetch(`/api/projects/${projectId}/members/${userId}`, { method: 'DELETE' });
       if (!res.ok) throw new Error('Failed to remove member');
       const data = await res.json();
       setProject(data);
@@ -144,7 +144,7 @@ export default function ProjectSettings() {
   const handleTransferOwnership = async () => {
     setTransferLoading(true);
     try {
-      const res = await authFetch(`http://localhost:5000/api/projects/${projectId}/transfer-ownership`, {
+      const res = await authFetch(`/api/projects/${projectId}/transfer-ownership`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ newOwnerId: transferTo }),

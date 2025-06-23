@@ -32,7 +32,7 @@ export default function ActivityView() {
   useEffect(() => { if (projectId) fetchLogs(); }, [projectId]);
 
   useEffect(() => {
-    const socket = io('http://localhost:5000');
+    const socket = io(import.meta.env.VITE_API_URL, { transports: ['websocket'] });
     socket.on('projectActivity', activity => {
       if (activity.project === projectId) setLogs(logs => [activity, ...logs]);
     });

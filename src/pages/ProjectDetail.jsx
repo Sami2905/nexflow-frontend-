@@ -475,7 +475,7 @@ export default function ProjectDetail() {
     setTransferLoading(true);
     try {
       const token = localStorage.getItem('token');
-      const res = await authFetch(`http://localhost:5000/api/projects/${projectId}/transfer-ownership`, {
+      const res = await authFetch(`/api/projects/${projectId}/transfer-ownership`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify({ newOwnerId }),
@@ -494,7 +494,7 @@ export default function ProjectDetail() {
     setDeleteLoading(true);
     try {
       const token = localStorage.getItem('token');
-      const res = await authFetch(`http://localhost:5000/api/projects/${projectId}`, {
+      const res = await authFetch(`/api/projects/${projectId}`, {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -624,7 +624,7 @@ export default function ProjectDetail() {
   const canEditTicket = (ticket) => user && (ticket.createdBy === user._id || isAdmin);
 
   useEffect(() => {
-    const socket = io('http://localhost:5000');
+    const socket = io(import.meta.env.VITE_API_URL, { transports: ['websocket'] });
     socket.on('commentAdded', ({ bugId, comment }) => {
       if (ticketDetail && bugId === ticketDetail._id) {
         setComments(cs => [...cs, comment]);

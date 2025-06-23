@@ -16,7 +16,10 @@ export default function LoginPage() {
     setError('');
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:5000/api/auth/login', {
+      const baseUrl = import.meta.env.VITE_API_URL || '';
+      const url = '/api/auth/login';
+      const fullUrl = url.startsWith('http') ? url : baseUrl.replace(/\/$/, '') + (url.startsWith('/') ? url : '/' + url);
+      const res = await fetch(fullUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
