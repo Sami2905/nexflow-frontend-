@@ -19,18 +19,30 @@ const NAV_LINKS = [
   { name: 'Settings', to: '/settings', icon: HiOutlineCog },
 ];
 
-export default function Sidebar({ isCollapsed, setIsCollapsed, theme, toggleTheme }) {
+export default function Sidebar({ isCollapsed, setIsCollapsed, theme, toggleTheme, mobileOpen = false, onCloseMobile }) {
 
   return (
     <aside 
-      className={`flex flex-col bg-surface-light dark:bg-surface-dark border-r border-border-light dark:border-border-dark transition-all duration-300 ease-in-out ${isCollapsed ? 'w-20' : 'w-64'}`}
+      className={`fixed md:static top-0 left-0 h-full z-40 md:z-auto transition-transform duration-300 ease-in-out bg-surface-light dark:bg-surface-dark border-r border-border-light dark:border-border-dark flex flex-col 
+        ${isCollapsed ? 'w-20' : 'w-64'}
+        ${mobileOpen ? 'translate-x-0' : '-translate-x-full'}
+        md:translate-x-0
+        md:h-auto
+      `}
+      style={{ minWidth: 0 }}
     >
-      {/* Header */}
-      <div className="flex items-center h-16 px-4 border-b border-border-light dark:border-border-dark">
+      {/* Mobile Close Button */}
+      <div className="md:hidden flex items-center justify-between h-16 px-4 border-b border-border-light dark:border-border-dark">
+        <img src={logo} alt="NexFlow" className="h-8 w-auto" />
+        <button onClick={onCloseMobile} className="p-2 rounded hover:bg-primary/10 focus:outline-none">
+          <HiOutlineChevronDoubleLeft className="h-6 w-6" />
+        </button>
+      </div>
+      {/* Header (desktop) */}
+      <div className="hidden md:flex items-center h-16 px-4 border-b border-border-light dark:border-border-dark">
         <img src={logo} alt="NexFlow" className={`h-8 w-auto transition-all duration-300 ease-in-out ${isCollapsed ? 'mx-auto' : ''}`} />
         <span className={`text-xl font-bold ml-3 text-text-primary-light dark:text-text-primary-dark transition-all duration-300 ease-in-out ${isCollapsed ? 'opacity-0 w-0' : 'opacity-100 w-auto'}`}>NexFlow</span>
       </div>
-
       {/* Navigation */}
       <nav className="flex-1 px-3 py-4 space-y-2">
         {NAV_LINKS.map(link => (
@@ -43,13 +55,13 @@ export default function Sidebar({ isCollapsed, setIsCollapsed, theme, toggleThem
               ${isActive ? 'bg-primary/10 text-primary' : 'text-text-secondary-light dark:text-text-secondary-dark hover:bg-primary/5 hover:scale-[1.04] active:scale-95'}
               ${isCollapsed ? 'justify-center' : ''}`
             }
+            onClick={onCloseMobile}
           >
             <link.icon className={`h-6 w-6 transition-all duration-300 ${isCollapsed ? 'opacity-100' : 'opacity-100 mr-3'}`} />
             <span className={`transition-opacity duration-300 ${isCollapsed ? 'opacity-0 w-0' : 'opacity-100 w-auto'}`}>{!isCollapsed && link.name}</span>
           </NavLink>
         ))}
       </nav>
-
       {/* Footer (Collapse/Theme Toggle) */}
       <div className="px-3 py-4 border-t border-border-light dark:border-border-dark">
         <button

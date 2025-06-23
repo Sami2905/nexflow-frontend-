@@ -102,21 +102,21 @@ export default function ProjectsPage() {
 
   return (
     <div className="animate-fade-in-fast">
-      <div className="flex justify-between items-center mb-8">
+      <div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-center mb-8 gap-4 sm:gap-0">
         <div>
           <h1 className="text-3xl font-bold text-text-primary-light dark:text-text-primary-dark">Projects</h1>
           <p className="text-text-secondary-light dark:text-text-secondary-dark mt-1">Select a project to view its bugs, board, and settings.</p>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full sm:w-auto">
           <button
             onClick={() => setView(view === 'grid' ? 'table' : 'grid')}
-            className="px-3 py-2 border rounded-md text-sm font-medium bg-surface-light dark:bg-surface-dark hover:bg-surface-light/80 dark:hover:bg-surface-dark/80"
+            className="px-3 py-2 border rounded-md text-sm font-medium bg-surface-light dark:bg-surface-dark hover:bg-surface-light/80 dark:hover:bg-surface-dark/80 w-full sm:w-auto"
           >
             {view === 'grid' ? 'Table View' : 'Grid View'}
           </button>
           <button
             onClick={() => navigate('/projects/create')}
-            className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-primary rounded-md hover:bg-primary/90"
+            className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-primary rounded-md hover:bg-primary/90 w-full sm:w-auto"
           >
             <HiPlus /> New Project
           </button>

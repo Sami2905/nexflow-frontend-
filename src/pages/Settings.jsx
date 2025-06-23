@@ -185,10 +185,10 @@ export default function Settings() {
   };
 
   return (
-    <div className={`min-h-screen flex flex-col items-center justify-center bg-background-light dark:bg-background-dark p-6 ${highContrast ? 'contrast-200' : ''}`}>
+    <div className={`min-h-screen flex flex-col items-center justify-center bg-background-light dark:bg-background-dark p-2 sm:p-4 md:p-6 ${highContrast ? 'contrast-200' : ''}`}>
       <div className="rounded-xl bg-card-light dark:bg-card-dark shadow p-0 w-full max-w-2xl flex flex-col md:flex-row overflow-hidden">
         {/* Sidebar */}
-        <div className="bg-surface-light dark:bg-surface-dark p-6 flex flex-col gap-6 w-full md:w-1/3 border-r border-border-light dark:border-border-dark">
+        <div className="bg-surface-light dark:bg-surface-dark p-4 sm:p-6 flex flex-col gap-6 w-full md:w-1/3 border-b md:border-b-0 md:border-r border-border-light dark:border-border-dark">
           <div className="flex flex-col items-center gap-2">
             <div className="bg-primary text-white rounded-full w-16 h-16 flex items-center justify-center text-3xl font-bold"><User size={40} /></div>
             <div className="font-semibold text-lg mt-2">User Name</div>
@@ -201,26 +201,26 @@ export default function Settings() {
           </div>
         </div>
         {/* Main Content */}
-        <div className="flex-1 p-8">
+        <div className="flex-1 p-4 sm:p-6 md:p-8">
           <h2 className="text-2xl font-bold mb-4 text-textPrimary-light dark:text-textPrimary-dark">Settings</h2>
           {toast && <div className="mb-2 text-success text-center">{toast}</div>}
           {loading ? <SpinnerOverlay message="Loading settings..." /> : (
             <div className="space-y-6">
               {activeSection === 'preferences' && <>
                 {/* Theme Toggle */}
-                <div className="flex items-center justify-between hover:bg-primary/5 rounded-lg px-4 py-2 transition">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between hover:bg-primary/5 rounded-lg px-4 py-2 transition gap-2 sm:gap-0">
                   <span className="font-semibold">Dark Mode</span>
                   <button className={`btn btn-sm ${darkMode ? 'btn-primary' : 'btn-outline'}`} onClick={handleThemeToggle}>{darkMode ? 'On' : 'Off'}</button>
                 </div>
                 {/* High Contrast */}
-                <div className="flex items-center justify-between hover:bg-emerald-50 dark:hover:bg-emerald-900/20 rounded-lg px-4 py-2 transition">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between hover:bg-emerald-50 dark:hover:bg-emerald-900/20 rounded-lg px-4 py-2 transition gap-2 sm:gap-0">
                   <span className="font-semibold">High Contrast</span>
                   <button className={`btn btn-sm ${highContrast ? 'btn-primary' : 'btn-outline'}`} onClick={handleHighContrastToggle}>{highContrast ? 'On' : 'Off'}</button>
                 </div>
                 {/* Language */}
-                <div className="flex items-center justify-between hover:bg-purple-50 dark:hover:bg-purple-900/20 rounded-lg px-4 py-2 transition">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between hover:bg-purple-50 dark:hover:bg-purple-900/20 rounded-lg px-4 py-2 transition gap-2 sm:gap-0">
                   <span className="font-semibold">Language</span>
-                  <select className="input input-bordered w-32" value={language} onChange={handleLanguageChange}>
+                  <select className="input input-bordered w-full sm:w-32" value={language} onChange={handleLanguageChange}>
                     <option value="en">English</option>
                     <option value="es">Español</option>
                     <option value="fr">Français</option>
@@ -229,12 +229,12 @@ export default function Settings() {
               </>}
               {activeSection === 'notifications' && <>
                 {/* Notification Preferences */}
-                <div className="flex items-center justify-between hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg px-4 py-2 transition">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg px-4 py-2 transition gap-2 sm:gap-0">
                   <span className="font-semibold">Enable Notifications</span>
                   <button className={`btn btn-sm ${notificationsEnabled ? 'btn-primary' : 'btn-outline'}`} onClick={handleNotificationsToggle}>{notificationsEnabled ? 'On' : 'Off'}</button>
                 </div>
                 {/* Email Preferences */}
-                <div className="flex items-center justify-between hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg px-4 py-2 transition">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg px-4 py-2 transition gap-2 sm:gap-0">
                   <span className="font-semibold">Email Preferences</span>
                   <button className={`btn btn-sm ${emailPrefs ? 'btn-primary' : 'btn-outline'}`} onClick={handleEmailPrefsToggle}>{emailPrefs ? 'On' : 'Off'}</button>
                 </div>

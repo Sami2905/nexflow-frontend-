@@ -30,7 +30,7 @@ export default function RegisterPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-base-200 theme-bg animate-fade-in">
-      <div className="card w-full max-w-md bg-base-100 glass shadow-xl p-8 animate-fade-in">
+      <div className="card w-full max-w-md bg-base-100 glass shadow-xl p-4 sm:p-8 animate-fade-in">
         <div className="flex flex-col items-center mb-6">
           <img src={logo} alt="Logo" className="w-16 h-16 mb-2" />
           <h1 className="text-2xl font-bold mb-1">NexFlow</h1>
@@ -43,7 +43,7 @@ export default function RegisterPage() {
         )}
         {error && <div className="alert alert-error animate-fade-in">{error}</div>}
         {success && <div className="alert alert-success animate-fade-in">{success}</div>}
-        <form className="card w-96 bg-base-100 glass shadow-xl p-8 space-y-4" onSubmit={handleSubmit} aria-label="Register Form">
+        <form className="space-y-4 w-full" onSubmit={handleSubmit} aria-label="Register Form">
           <div className="relative mb-4">
             <input
               type="text"

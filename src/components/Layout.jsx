@@ -3,6 +3,7 @@ import { Outlet, useNavigate } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import Header from './Header';
 import { authFetch } from '../utils/authFetch';
+import { HiMenu } from 'react-icons/hi';
 
 export default function Layout() {
   // --- Theme Management ---
@@ -21,6 +22,7 @@ export default function Layout() {
   
   // --- Sidebar State ---
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
   // --- User & Auth Management ---
   const [user, setUser] = useState(null);
@@ -83,10 +85,31 @@ export default function Layout() {
   }
 
   return (
-    <div className="min-h-screen w-full flex bg-background-light dark:bg-background-dark">
-      <Sidebar isCollapsed={isSidebarCollapsed} setIsCollapsed={setIsSidebarCollapsed} theme={theme} toggleTheme={toggleTheme} />
-      <div className={`flex-1 flex flex-col transition-all duration-300 ease-in-out ${isSidebarCollapsed ? 'ml-20' : 'ml-64'}`} style={{ minWidth: 0 }}>
-        <Header user={user} onLogout={handleLogout} />
+    <div className="min-h-screen w-full flex bg-background-light dark:bg-background-dark relative">
+      {/* Mobile Sidebar Overlay */}
+      {mobileSidebarOpen && (
+        <div className="fixed inset-0 z-30 bg-black/40 md:hidden" onClick={() => setMobileSidebarOpen(false)} />
+      )}
+      <Sidebar
+        isCollapsed={isSidebarCollapsed}
+        setIsCollapsed={setIsSidebarCollapsed}
+        theme={theme}
+        toggleTheme={toggleTheme}
+        mobileOpen={mobileSidebarOpen}
+        onCloseMobile={() => setMobileSidebarOpen(false)}
+      />
+      <div className={`flex-1 flex flex-col transition-all duration-300 ease-in-out ${isSidebarCollapsed ? 'ml-20' : 'ml-64'} md:ml-64`} style={{ minWidth: 0 }}>
+        {/* Header with mobile menu button */}
+        <div className="md:hidden flex items-center h-16 px-4 border-b border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark">
+          <button className="mr-4 p-2 rounded hover:bg-primary/10 focus:outline-none" onClick={() => setMobileSidebarOpen(true)}>
+            <HiMenu className="h-6 w-6" />
+          </button>
+          <Header user={user} onLogout={handleLogout} />
+        </div>
+        {/* Desktop Header */}
+        <div className="hidden md:block">
+          <Header user={user} onLogout={handleLogout} />
+        </div>
         <main className="flex-1 p-4 sm:p-6 lg:p-8">
           <Outlet context={{ user, theme, toggleTheme }} />
         </main>
