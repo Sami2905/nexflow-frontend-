@@ -32,7 +32,7 @@ export default function Login() {
       return;
     }
     try {
-      const baseUrl = 'http://localhost:5000';
+      const baseUrl = import.meta.env.VITE_API_URL || '';
       const url = '/api/auth/login';
       const fullUrl = url.startsWith('http') ? url : baseUrl.replace(/\/$/, '') + (url.startsWith('/') ? url : '/' + url);
       const res = await fetch(fullUrl, {
@@ -66,7 +66,7 @@ export default function Login() {
   const handle2FAVerify = async () => {
     setTwoFAError('');
     try {
-      const baseUrl = 'http://localhost:5000';
+      const baseUrl = import.meta.env.VITE_API_URL || '';
       const url = '/api/auth/2fa/verify';
       const fullUrl = url.startsWith('http') ? url : baseUrl.replace(/\/$/, '') + (url.startsWith('/') ? url : '/' + url);
       const res = await fetch(fullUrl, {

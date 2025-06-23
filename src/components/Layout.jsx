@@ -27,6 +27,8 @@ export default function Layout() {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
+  const baseUrl = import.meta.env.VITE_API_URL || '';
+
   useEffect(() => {
     console.log('Layout useEffect running. Path:', window.location.pathname, 'Token:', localStorage.getItem('token'));
     const fetchUser = async () => {

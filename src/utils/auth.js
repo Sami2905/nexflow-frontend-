@@ -2,7 +2,10 @@ import axios from 'axios';
 
 export async function loginAndSaveJWT(email, password) {
   try {
-    const res = await axios.post('http://localhost:5000/api/auth/login', { email, password });
+    const baseUrl = import.meta.env.VITE_API_URL || '';
+    const url = '/api/auth/login';
+    const fullUrl = url.startsWith('http') ? url : baseUrl.replace(/\/$/, '') + (url.startsWith('/') ? url : '/' + url);
+    const res = await axios.post(fullUrl, { email, password });
     localStorage.setItem('token', res.data.token);
     alert('Logged in! JWT saved in localStorage.');
     return res.data;

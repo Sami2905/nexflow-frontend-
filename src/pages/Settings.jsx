@@ -29,6 +29,7 @@ export default function Settings() {
   const [twoFAOtpauth, setTwoFAOtpauth] = useState('');
   const [activeSection, setActiveSection] = useState('preferences');
   const navigate = useNavigate();
+  const baseUrl = import.meta.env.VITE_API_URL || '';
 
   useEffect(() => {
     const fetchSettings = async () => {
